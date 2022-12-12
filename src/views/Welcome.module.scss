@@ -2,8 +2,10 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(to bottom, #fff 20%, #000);
 
   > header {
+    padding-top: 4.125em;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -17,6 +19,8 @@
   }
   > main {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
  
   }
   
