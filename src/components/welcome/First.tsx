@@ -2,21 +2,23 @@ import { defineComponent } from 'vue';
 import s from './First.module.scss';
 import icon from '../../assets/icons/balance.svg';
 import { RouterLink } from 'vue-router';
+import { WelcomeLayout } from './WelcomeLayout';
 
 export const First = defineComponent({
  setup(props, context) {
+  const slots = {
+    icon: () => <img class={s.icon} src={icon}/>,
+    title: () => <h2>会挣钱<br />还要会省钱</h2>,
+    buttons: () => <>
+      <RouterLink class={s.fake} to='/welcome/start'>跳过</RouterLink>
+      <RouterLink class={s.next} to="/welcome/2">下一页</RouterLink>
+      <RouterLink to='/welcome/start'>跳过</RouterLink>
+    </>
+  }
   return () => (
-    <div class={s.wrapper}>
-      <div class={s.card}>
-        <img class={s.icon} src={icon}/>
-        <h2>会挣钱<br />还要会省钱</h2>
-      </div>
-      <div class={s.actions}>
-        <RouterLink class={s.fake} to='/welcome/start'>跳过</RouterLink>
-        <RouterLink class={s.next} to="/welcome/2">下一页</RouterLink>
-        <RouterLink to='/welcome/start'>跳过</RouterLink>
-      </div>
-    </div>
+    <WelcomeLayout v-slots={slots}>
+ 
+    </WelcomeLayout>
   )
  }
 })
