@@ -1,8 +1,9 @@
 .wrapper {
-  height: 100vh;
+  height: calc(100vh - var(--welcome-nav-height));
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, #fff 20%, #000);
+  background: linear-gradient(to bottom, var(--welcome-bg-start) 20%, var(--welcome-bg-end));
+  margin-bottom: var(--welcome-nav-height);
 
   > header {
     padding-top: 4.125em;

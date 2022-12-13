@@ -26,12 +26,22 @@
   }
 
   .actions {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: var(--z-index-bottom-nav);
+    background: var(--welcome-bg-end);
+    height: var(--welcome-nav-height);
+
+    padding: 0 1em;
+    padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 1em;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--welcome-text);
+
     .fake {
       visibility: hidden;
     }
