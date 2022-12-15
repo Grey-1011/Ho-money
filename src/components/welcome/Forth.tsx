@@ -1,24 +1,11 @@
-import { defineComponent } from 'vue';
-import s from './WelcomeLayout.module.scss';
+import s from './Welcome.module.scss';
 import icon from '../../assets/icons/cloud.svg';
-import { RouterLink } from 'vue-router';
-import { WelcomeLayout } from './WelcomeLayout';
 
-export const Forth = defineComponent({
- setup(props, context) {
-  const slots = {
-    icon: () => <img class={s.icon} src={icon}/>,
-    title: () => <h2>数据可视化<br />不遗漏每一笔账单</h2>,
-    buttons: () => <>
-      <RouterLink class={s.fake} to='/welcome/start'>跳过</RouterLink>
-      <RouterLink class={s.next} to="/welcome/start">完成</RouterLink>
-      <RouterLink class={s.fake} to='/welcome/start'>跳过</RouterLink>
-    </>
-  }
-  return () => (
-    <WelcomeLayout v-slots={slots}>
+export const Forth = () => (
+  <div class={s.card}>
+    <img class={s.icon} src={icon}/>
+    <h2>云备份<br />再也不怕数据丢失</h2>
+  </div>
+)
 
-    </WelcomeLayout>
-  )
- }
-})
+Forth.displayName = 'Forth'
