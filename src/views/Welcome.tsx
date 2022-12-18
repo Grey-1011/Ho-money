@@ -5,6 +5,13 @@ import { throttle } from '../shared/throttle';
 
 import s from './Welcome.module.scss';
 
+const pushMap: Record<string, string> = {
+  'Welcome1': '/welcome/2',
+  'Welcome2': '/welcome/3',
+  'Welcome3': '/welcome/4',
+  'Welcome4': '/start',
+}
+
 export const Welcome = defineComponent({
  setup(props, context) {
 
@@ -13,15 +20,8 @@ export const Welcome = defineComponent({
   const router = useRouter()
   const {direction, swiping} = useSwipe(main,{ beforeStart: e => e.preventDefault() })
   const push = throttle(()=>{
-    if(route.name === 'Welcome1'){
-      router.push('/welcome/2')
-    }else if(route.name === 'Welcome2'){
-      router.push('/welcome/3')
-    }else if(route.name === 'Welcome3'){
-      router.push('/welcome/4')
-    }else if(route.name === 'Welcome4'){
-      router.push('/start')
-    }
+    const name = (route.name || 'Welcome1').toString()
+    router.push(pushMap[name])
   },500)
 
   watchEffect(() => {
