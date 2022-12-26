@@ -21,7 +21,7 @@ export const Welcome = defineComponent({
   const {direction, swiping} = useSwipe(main,{ beforeStart: e => e.preventDefault() })
   const push = throttle(()=>{
     const name = (route.name || 'Welcome1').toString()
-    router.push(pushMap[name])
+    router.replace(pushMap[name])
   },500)
 
   watchEffect(() => {
