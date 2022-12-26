@@ -7,6 +7,7 @@ import { Second } from '../components/welcome/Second'
 import { SecondAction } from '../components/welcome/SecondAction'
 import { Third } from '../components/welcome/Third'
 import { ThirdAction } from '../components/welcome/ThirdAction'
+import { StartPage } from '../views/StartPage'
 import { Welcome } from '../views/Welcome'
 
 export const routes:Readonly<RouteRecordRaw[]> = [
@@ -20,5 +21,6 @@ export const routes:Readonly<RouteRecordRaw[]> = [
       { path: '3', name: 'Welcome3', components: { main: Third, footer: ThirdAction } },
       { path: '4', name: 'Welcome4', components: { main: Forth, footer: ForthAction } },
     ]
-  }
+  },
+  { path: '/start', component: StartPage },
 ]
