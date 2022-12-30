@@ -1,0 +1,27 @@
+.navbar {
+  background: linear-gradient(to left, var(--navbar-bg-start), var(--navbar-bg-end));
+  color: var(--navbar-text);
+  fill: var(--navbar-text);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 1.5em 1em 0.75em;
+}
+
+.title_wrapper {
+  font-size: 1.5rem;
+  margin-left: 0.75em;
+}
+
+.icon_wrapper {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

@@ -10,6 +10,13 @@
   width: 8em;
   height: 8em;
   &_wrapper {
-    padding: 10em 0;
+    padding: 8em 0;
   }
+}
+
+.navIcon {
+  width: 1.875em;
+  height: 1.875em;
+  position: relative;
+  top: 2px;
 }
