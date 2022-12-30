@@ -5,3 +5,11 @@
     padding: 0 1em;
   }
 }
+
+.balance {
+  width: 8em;
+  height: 8em;
+  &_wrapper {
+    padding: 10em 0;
+  }
+}
