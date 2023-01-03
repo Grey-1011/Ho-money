@@ -25,8 +25,8 @@ export const StartPage = defineComponent({
         </Navbar>
         { overlayVisible.value && <Overlay onClose={() => overlayVisible.value = false}/> }
       </div>
-      <Center class={s.balance_wrapper}>
-        <Icon name='balance' class={s.balance}/>
+      <Center class={s.wallet_wrapper}>
+        <Icon name='wallet' class={s.wallet}/>
       </Center>
       <div class={s.button_wrapper}>
         <Button class={s.button}>开始记账</Button>
