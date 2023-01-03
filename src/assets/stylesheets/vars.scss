@@ -14,10 +14,12 @@
   --button-height: 3rem;
   --float-button-text: white;
   --float-button-bg: var(--button-bg);
-  --navbar-bg-start: var(--welcome-bg-start);
-  --navbar-bg-end: var(--welcome-bg-end);
+  --navbar-bg-start: #0e0e6d;
+  --navbar-bg-end: #5d33be;
   --navbar-text: var(--welcome-text);
   --overlay-mask-bg: rgba(0, 0, 0, 0.5);
   --overlay-bg: white;
   --top-safe-area-height: 1.5rem;
+  --overlay-user-bg: #0e0e6d;
+  --overlay-user-text: white;
 }
