@@ -1,3 +1,32 @@
+.dateAndAmount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border-top: 1px solid var(--button-border-color);
+
+  >.date {
+   font-size: 0.75rem;
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   font-family: monospace;
+   color: var(--date-text);
+   fill: var(--tabs-selected-text);
+   
+   .icon {
+    width: 2em;
+    height: 2em;
+    margin-right: 0.6em;
+   }
+  }
+
+  >.amount {
+    font-size: 1.25rem;
+    font-family: monospace;
+  }
+}
+
 .buttons {
   display: flex;
   flex-wrap: wrap;

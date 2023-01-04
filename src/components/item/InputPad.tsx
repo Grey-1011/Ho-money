@@ -27,9 +27,9 @@ export const InputPad = defineComponent({
       {text: '提交', onClick: () => {}},
     ]
     return () => <>
-      <div>
-        <span class={s.remark}>
-          <Icon name='date'/>
+      <div class={s.dateAndAmount}>
+        <span class={s.date}>
+          <Icon name='date' class={s.icon}/>
           <span>2023-01-01</span>
         </span>
         <span class={s.amount}>123456789</span>
