@@ -11,9 +11,6 @@ export const ItemCreate = defineComponent({
   },
   setup(props, context) {
     const kind = ref('支出');
-    const onUpdateSelected = (name: string) => {
-      kind.value = name
-    }
     return () => (
       <MainLayout>{
         {

@@ -1,8 +1,36 @@
 .tabs {
   &_nav {
+    background: var(--navbar-bg-end);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: var(--navbar-text);
+    padding: 0 2em;
+    
     > li {
+      background: var(--navbar-bg-end);
+      flex-grow: 1;
+      flex-shrink: 0;
+      padding: 0.625em 0;
+    
       &.selected {
-        background: red;
+        background-color: var(--tabs-selected-bg);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        color: var(--tabs-selected-text);
+        position: relative;
+
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: var(--tabs-indicator-bg);
+        }
       }
     }
   }
