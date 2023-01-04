@@ -22,7 +22,7 @@ export const Tabs = defineComponent({
       }
       return <div class={s.tabs}>
         <ol class={s.tabs_nav}>
-          {tabs.map(item =>
+          { tabs.map(item =>
             <li class={item.props?.name === props.selected ? s.selected : ''}
               onClick={() => context.emit('update:selected', item.props?.name)}
             >
@@ -46,7 +46,7 @@ export const Tab = defineComponent({
   },
   setup(props, context) {
     return () => (
-      <div>{context.slots.default?.()}</div>
+      <div>{ context.slots.default?.() }</div>
     )
   }
 })
