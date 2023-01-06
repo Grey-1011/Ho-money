@@ -10,13 +10,16 @@ export const InputPad = defineComponent({
   props: {
     name: {
       type: String as PropType<string>,
-    }
+    },
   },
   setup(props, context) {
     // 将 Date 转换为  string[]
     const now = [...new Date().toLocaleDateString().split('/')]
-    const refDate = ref(now)
-    const refShowPop = ref(false)
+    const refDate = ref<string[]>(now)
+    const refDatePickerVisible = ref(false)
+    const showDatePicker = () => refDatePickerVisible.value = true
+    const hideDatePicker = () => refDatePickerVisible.value = false
+    const setDate = (val: { selectedValues: string[]; }) => { refDate.value = val.selectedValues; hideDatePicker() }
 
     const buttons = [
       {text: '1', onClick: () => {}},
@@ -41,11 +44,12 @@ export const InputPad = defineComponent({
         <span class={s.date}>
           <Icon name='date' class={s.icon}/>
           <span>
-            <span onClick={() => refShowPop.value = true}>{time(new Date(refDate.value.toLocaleString())).format()}</span>
-              <Popup position='bottom' v-model:show={refShowPop.value}>
-	              <DatePicker v-model={refDate.value} title="选择日期" 
-                  onConfirm={ () => refShowPop.value = false}
-                />{ console.log(new Date(refDate.value!.toLocaleString())) }
+            <span onClick={ showDatePicker }>{time(new Date(refDate.value.toLocaleString())).format()}</span>
+              <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
+	              <DatePicker modelValue={refDate.value} title="选择日期" 
+                  onConfirm={ setDate }
+                  onCancel={ hideDatePicker }
+                />
               </Popup>
           </span>
         </span>
