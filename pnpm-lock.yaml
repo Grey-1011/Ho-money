@@ -7,6 +7,7 @@ specifiers:
   svgo: 3.0.2
   svgstore: 3.0.1
   typescript: 4.9.3
+  vant: 4.0.7
   vite: 3.2.5
   vue: 3.2.45
   vue-router: '4'
@@ -16,6 +17,7 @@ dependencies:
   sass: 1.56.2
   svgo: 3.0.2
   svgstore: 3.0.1
+  vant: 4.0.7_vue@3.2.45
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
 
@@ -375,6 +377,14 @@ packages:
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
+    dev: false
+
+  /@vant/popperjs/1.3.0:
+    resolution: {integrity: sha512-hB+czUG+aHtjhaEmCJDuXOep0YTZjdlRR+4MSmIFnkCQIxJaXLQdSsR90XWvAI2yvKUI7TCGqR8pQg2RtvkMHw==}
+    dev: false
+
+  /@vant/use/1.4.3:
+    resolution: {integrity: sha512-rSnETN7P9qT1WbItMpQxBqe3cHeK2ZFYp1sCxWUXaTeI71TqA8sOdzC36ledZ36NQgFNTch9fsRPYOkrCgZfQA==}
     dev: false
 
   /@vitejs/plugin-vue-jsx/2.1.1_vite@3.2.5+vue@3.2.45:
@@ -1318,6 +1328,16 @@ packages:
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
+
+  /vant/4.0.7_vue@3.2.45:
+    resolution: {integrity: sha512-jApCwgr8EugardxVM5fjhPimB6TU7byS2frU41Vr+ZSE4Z+kx6DO6Gklu9/cb0O91g6nPq147Kx+wCLm5lCFJw==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@vant/popperjs': 1.3.0
+      '@vant/use': 1.4.3
+      vue: 3.2.45
+    dev: false
 
   /vite/3.2.5_sass@1.56.2:
     resolution: {integrity: sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==}

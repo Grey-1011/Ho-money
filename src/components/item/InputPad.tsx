@@ -2,6 +2,10 @@ import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from '../../shared/Icon';
 import { time } from '../../shared/time';
 import s from './InputPad.module.scss';
+
+import 'vant/lib/index.css';
+import { DatePicker, Popup } from 'vant';
+
 export const InputPad = defineComponent({
   props: {
     name: {
@@ -9,8 +13,10 @@ export const InputPad = defineComponent({
     }
   },
   setup(props, context) {
-    const data = ref<Date>();
-    const now = new Date();
+    // 将 Date 转换为  string[]
+    const now = [...new Date().toLocaleDateString().split('/')]
+    const refDate = ref(now)
+    const refShowPop = ref(false)
 
     const buttons = [
       {text: '1', onClick: () => {}},
@@ -35,7 +41,12 @@ export const InputPad = defineComponent({
         <span class={s.date}>
           <Icon name='date' class={s.icon}/>
           <span>
-            <input type='date' value={time(now).format()}></input>
+            <span onClick={() => refShowPop.value = true}>{time(new Date(refDate.value.toLocaleString())).format()}</span>
+              <Popup position='bottom' v-model:show={refShowPop.value}>
+	              <DatePicker v-model={refDate.value} title="选择日期" 
+                  onConfirm={ () => refShowPop.value = false}
+                />{ console.log(new Date(refDate.value!.toLocaleString())) }
+              </Popup>
           </span>
         </span>
         <span class={s.amount}>123456789</span>
