@@ -5,13 +5,10 @@ import s from './InputPad.module.scss';
 
 import 'vant/lib/index.css';
 import { DatePicker, Popup } from 'vant';
+import { calculate } from '../../shared/calculate';
 
 export const InputPad = defineComponent({
-  props: {
-    name: {
-      type: String as PropType<string>,
-    },
-  },
+  
   setup(props, context) {
     // 将 Date 转换为  string[]
     const now = [...new Date().toLocaleDateString().split('/')]
@@ -21,22 +18,39 @@ export const InputPad = defineComponent({
     const hideDatePicker = () => refDatePickerVisible.value = false
     const setDate = (val: { selectedValues: string[]; }) => { refDate.value = val.selectedValues; hideDatePicker() }
 
-    const refAmount = ref('');
-    const appendText = (n: number | string ) => { refAmount.value += n.toString() }
+    const refAmount = ref('0');
+
+    const handleClick = (n: string | number) => {
+      calculate(refAmount, n)
+    }
+
+    const handleAdd = (add: string) => {
+      calculate(refAmount, add, (x: number, y: number) => x + y)
+    }
+
+    const handleSubtract = (sub: string) => {
+      calculate(refAmount, sub, (x, y) => x - y)
+    }
+    const handleSumbit = () => {
+
+    }
+
     const buttons = [
-      { text: '1', onClick: () => { appendText(1) } },
-      { text: '2', onClick: () => { appendText(2) } },
-      { text: '3', onClick: () => { appendText(3) } },
-      { text: '4', onClick: () => { appendText(4) } },
-      { text: '5', onClick: () => { appendText(5) } },
-      { text: '6', onClick: () => { appendText(6) } },
-      { text: '7', onClick: () => { appendText(7) } },
-      { text: '8', onClick: () => { appendText(8) } },
-      { text: '9', onClick: () => { appendText(9) } },
-      { text: '.', onClick: () => { appendText('.') } },
-      { text: '0', onClick: () => { appendText(0) } },
-      { text: '清空', onClick: () => { refAmount.value = ''} },
-      { text: '提交', onClick: () => { } },
+      { text: '1', onClick: () => { handleClick(1) } },
+      { text: '2', onClick: () => { handleClick(2) } },
+      { text: '3', onClick: () => { handleClick(3) } },
+      { text: '4', onClick: () => { handleClick(4) } },
+      { text: '5', onClick: () => { handleClick(5) } },
+      { text: '6', onClick: () => { handleClick(6) } },
+      { text: '7', onClick: () => { handleClick(7) } },
+      { text: '8', onClick: () => { handleClick(8) } },
+      { text: '9', onClick: () => { handleClick(9) } },
+      { text: '0', onClick: () => { handleClick(0) } },
+      { text: '.', onClick: () => { handleClick('.') } },
+      { text: '清空', onClick: () => { refAmount.value = '0'} },
+      { text: '+', onClick: () => { handleAdd('+') } },
+      { text: '-', onClick: () => { handleSubtract('-') } },
+      { text: '=|√', onClick: () => { } },
     ]
     
     return () => <>
