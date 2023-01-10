@@ -15,6 +15,9 @@
 .formItem {
   min-height: var(--input-min-height);
   max-width: 100%;
+  &.button {
+    width: 100%;
+  }
   &.input {
     flex-grow: 1;
     border: 1px solid var(--input-border-color);

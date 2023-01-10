@@ -41,5 +41,4 @@ export const routes:Readonly<RouteRecordRaw[]> = [
       { path: ':id', component: TagEdit }
     ]
   }
-
 ]
