@@ -10,29 +10,34 @@ export const EmojiSelect = defineComponent({
   setup(props, context) {
     console.log(emojiList);
     const table: [string, string[]][] = [
+      ['收支',['money']],
+      ['出行',['transport-ground','transport-water','transport-air']],
+      ['衣服', ['clothing']],
+      ['食物', [
+        'food-fruit', 'food-vegetable', 'food-prepared', 'food-asian',
+        'food-marine', 'food-sweet', 'drink'
+      ]],
+      ['节日', ['event']],
+      ['酒店',['hotel']],
       ['表情', ['face-smiling', 'face-affection', 'face-tongue', 'face-hand',
         'face-neutral-skeptical', 'face-sleepy', 'face-unwell', 'face-hat',
         'face-glasses', 'face-concerned', 'face-negative', 'face-costume'
       ]],
-      ['手势', ['hand-fingers-open', 'hand-fingers-partial', 'hand-single-finger',
-        'hand-fingers-closed', 'hands', 'hand-prop', 'body-parts']],
-      ['人物', ['person', 'person-gesture', 'person-role', 'person-fantasy',
-        'person-activity', 'person-sport', 'person-resting']],
-      ['衣服', ['clothing']],
+      ['情感', ['emotion']],
+      ['手',['hand-fingers-open','hand-fingers-partial','hand-single-finger','hand-fingers-closed','hands','hand-prop']],
+      ['身体',['hand-prop']],
+      ['人物',['person','person-gesture','person-role','person-fantasy','person-activity','person-sport','person-resting',"person-symbol"]],
+      ['家',['family']],
+      ['头发', ['hair-style']],
       ['动物', ['cat-face', 'monkey-face', 'animal-mammal', 'animal-bird',
         'animal-amphibian', 'animal-reptile', 'animal-marine', 'animal-bug']],
       ['植物', ['plant-flower', 'plant-other']],
       ['自然', ['sky & weather', 'science']],
-      ['食物', [
-        'food-fruit', 'food-vegetable', 'food-prepared', 'food-asian',
-        'food-marine', 'food-sweet'
-      ]],
       ['运动', ['sport', 'game']],
     ]
 
     const refSelected = ref(0)
-    const selectedItem = table[refSelected.value][1]
-
+    
     const onClickEmoji = (item: string) => {
       context.emit('update:modelValue', item)
 
