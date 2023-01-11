@@ -1,11 +1,11 @@
-import { defineComponent, PropType, ref } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import { emojiList } from './emojiList';
 import s from './EmojiSelect.module.scss';
 export const EmojiSelect = defineComponent({
   props: {
-    name: {
-      type: String as PropType<string>,
-    }
+    modelValue: {
+      type: String
+    },
   },
   setup(props, context) {
     console.log(emojiList);
@@ -32,18 +32,35 @@ export const EmojiSelect = defineComponent({
 
     const refSelected = ref(0)
     const selectedItem = table[refSelected.value][1]
+
+    const onClickEmoji = (item: string) => {
+      context.emit('update:modelValue', item)
+
+    }
   
-    const emojis = selectedItem.map(category =>
-      emojiList.find(item => item[0] === category)?.[1].map(item => <li>{item}</li>)
-    )
+    const emojis = computed(()=>{
+      const selectedItem = table[refSelected.value][1]
+      return selectedItem.map(category => emojiList.find(item => item[0] === category)
+      ?.[1].map(item => 
+        <li class={item === props.modelValue ? s.selectedEmoji : '' }
+         onClick={() => onClickEmoji(item)}>{ item }</li>
+      ))
+    })
+    
+
+    const onClickTab = (index: number) => {
+      refSelected.value = index
+    }
     
     return () => (
       <div class={[s.emojiList, s.error]}>
         <nav>
-          { table.map(item => <span>{ item[0] }</span>) }
+          {table.map((item, index) => <span class={index === refSelected.value ? s.selected : ''}
+              onClick={ ()=> onClickTab(index)}>{ item[0] }
+            </span>)}
         </nav>
         <ol>
-          { emojis }
+          { emojis.value }
         </ol>
       </div>
     )
