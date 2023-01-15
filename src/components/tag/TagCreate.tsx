@@ -4,6 +4,8 @@ import { Button } from '../../shared/Button';
 import { EmojiSelect } from '../../shared/EmojiSelect';
 import { Icon } from '../../shared/Icon';
 import s from './TagCreate.module.scss';
+import { Rules, validate } from '../../shared/validate';
+
 export const TagCreate = defineComponent({
   props: {
     name: {
@@ -13,16 +15,21 @@ export const TagCreate = defineComponent({
   setup(props, context) {
     const formData = reactive({
       name: '',
-      sign: 'x',
+      sign: '',
     })
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onSubmit = (e: Event) => {
       console.log(toRaw(formData));
-      const rules = [
-        { key: 'name', required: true, message: '必填' },
-        { key: 'name', required: /^.{1,4}$/, message: '只能填 1~4 个字符' },
-        { key: 'sign', required: true }
+      const rules: Rules<typeof formData> = [
+        { key: 'name', type: 'required', message: '必填' },
+        { key: 'name', type: 'pattern', regex: /^.{1,4}$/, message: '只能填 1~4 个字符' },
+        { key: 'sign', type: 'required', message: '必填' }
       ]
-      // const errors = validate(formData, rules)
+      Object.assign(errors, {
+        name: undefined,
+        sign: undefined
+      })
+      Object.assign(errors, validate(formData, rules))
       e.preventDefault()
     }
 
@@ -40,7 +47,7 @@ export const TagCreate = defineComponent({
                     <input v-model={formData.name} type="text" class={[s.formItem, s.input, s.error]}/>
                   </div>
                   <div class={s.formItem_errorHint}>
-                    <span>必填</span>
+                    <span>{errors['name'] ? errors['name'][0] : '　'}</span>
                   </div>
                 </label>
               </div>
@@ -52,7 +59,7 @@ export const TagCreate = defineComponent({
                     <EmojiSelect v-model={formData.sign} class={s.formItem} />                      
                   </div>
                   <div class={s.formItem_errorHint}>
-                    <span>必填</span>
+                    <span>{errors['sign'] ? errors['sign'][0] : '　'}</span>
                   </div>
                 </label>
               </div>
