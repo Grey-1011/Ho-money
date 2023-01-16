@@ -3,7 +3,20 @@
   border-radius: var(--button-radius);
   background-color: var(--button-bg);
   font-size: var(--button-font-size);
-  padding: 0.5em 1em;
+  padding: 0.5em clamp(0.5em, 0.75em, 1em);
   color: var(--button-text);
   height: var(--button-height);
+
+  &.important {
+    background-color: var(--button-bg-important);
+    color: var(--button-text-important);
+  }
+  &.danger {
+    background-color: var(--button-bg-danger);
+    color: var(--button-text-important);
+  }
+  &.normal {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+  }
 }

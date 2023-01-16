@@ -44,3 +44,12 @@
     font-size: 0.75em;
   }
 }
+
+.actions{
+  padding: 0 1em 1em 1em;
+  display: flex;
+  justify-content: space-between;
+  .removeTags, .removeTagsAndItems{
+    width: calc(50% - 0.5em);
+  }
+}
