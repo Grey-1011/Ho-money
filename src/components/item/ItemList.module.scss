@@ -14,7 +14,19 @@
     }
     > main{
       background-color: white;
-      height: 20vh;
+      height: 25%;
+    }
+  }
+}
+
+.actions {
+  text-align: right;
+  button {
+    border: none;
+    background: transparent;
+    padding: 0.5em 1em;
+    & + & {
+      margin-left: 1em;
     }
   }
 }

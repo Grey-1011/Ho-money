@@ -1,6 +1,7 @@
 import { Overlay } from 'vant';
 import { defineComponent, PropType, reactive, ref, watchEffect } from 'vue';
 import { MainLayout } from '../../layouts/MainLayout';
+import { Button } from '../../shared/Button';
 import { Form, FormItem } from '../../shared/Form';
 import { Icon } from '../../shared/Icon';
 import { Tab, Tabs } from '../../shared/Tabs';
@@ -29,6 +30,14 @@ export const ItemList = defineComponent({
       }
     })
     const refOverlayVisible = ref(true)
+
+    const onSubmitCustomTime = (e: Event) => {
+      e.preventDefault()
+      refOverlayVisible.value = false
+    }
+    const onCancelCustomTime = () => {
+      refOverlayVisible.value = false
+    }
     return () => (
       <MainLayout>{
        {
@@ -56,12 +65,23 @@ export const ItemList = defineComponent({
               请选择时间
             </header>
             <main>
-              <Form> 
+              <Form onSubmit={onSubmitCustomTime}> 
                 <FormItem
                   label='开始时间'
                   type='date'
                   v-model={customTime.start}
                 />
+                <FormItem
+                  label='结束时间'
+                  type='date'
+                  v-model={customTime.end}
+                />
+                <FormItem>
+                  <div class={s.actions}>
+                    <button type="button" onClick={onCancelCustomTime}>取消</button>
+                    <button type="submit">确认</button>
+                  </div>
+                </FormItem>
                 
               </Form>
             </main>
