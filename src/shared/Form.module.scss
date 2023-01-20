@@ -27,6 +27,14 @@
     }
   }
 
+  &.validationCode {
+    flex-grow: 0;
+    width: 9em;
+  }
+  &.validationCodeButton {
+    margin-left: 1em;
+  }
+
   &_name {
   }
   &_value {
