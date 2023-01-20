@@ -5,21 +5,17 @@ import { Button } from '../shared/Button';
 import { Center } from '../shared/Center';
 import { FloatButton } from '../shared/FloatButton';
 import { Icon } from '../shared/Icon';
-import { Overlay } from '../shared/Overlay';
+import { Overlay, OverlayIcon } from '../shared/Overlay';
 import s from './StartPage.module.scss';
 
 export const StartPage = defineComponent({
  setup(props, context) {
-  const overlayVisible = ref(false);
-  const onClickMenu = () => {
-    overlayVisible.value = !overlayVisible.value;
-  }
 
   return () => (
     <MainLayout>{
       {
         title: () => '不叮记账',
-        icon: () => <Icon name='menu' class={s.navIcon} onClick={onClickMenu}/>,
+        icon: () => <OverlayIcon />,
         default: () => <>
           <Center class={s.wallet_wrapper}>
             <Icon name='wallet' class={s.wallet}/>
@@ -32,7 +28,7 @@ export const StartPage = defineComponent({
           <RouterLink to="/items/create">
             <FloatButton iconName='add'/>
           </RouterLink>
-          { overlayVisible.value && <Overlay onClose={() => overlayVisible.value = false}/> }
+          
         </>
       }
     }</MainLayout>

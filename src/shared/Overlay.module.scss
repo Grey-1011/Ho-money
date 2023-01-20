@@ -16,6 +16,7 @@
   background-color: var(--overlay-bg);
   width: 16em;
   height: calc(100% - var(--top-safe-area-height));
+  color: var(--text);
 }
 
 .currentUser {
@@ -35,4 +36,11 @@
   > .icon {
     margin-right: 0.75em;
   }
+}
+
+.icon {
+  width: 1.75em;
+  height: 1.75em;
+  position: relative;
+  top: 2px;
 }
