@@ -1,4 +1,5 @@
 :root {
+  --van-overlay-z-index: 64 !important;
   --welcome-card-bg: white;
   --welcome-text: white;
   --welcome-bg-start: #fff;
@@ -62,4 +63,6 @@
 
   --z-index-overlay: 16;
   --z-index-navbar: 32;
+
+ 
 }
