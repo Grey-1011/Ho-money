@@ -6,7 +6,10 @@
   padding: 0.5em clamp(0.5em, 0.75em, 1em);
   color: var(--button-text);
   height: var(--button-height);
-
+  &[disabled]{
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   &.important {
     background-color: var(--button-bg-important);
     color: var(--button-text-important);
