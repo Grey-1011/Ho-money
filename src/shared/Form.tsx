@@ -58,19 +58,18 @@ export const FormItem = defineComponent({
     const timer = ref<number>();
     const count = ref<number>(props.countForm);
     const isCounting = computed(() => !!timer.value);
-    const onClickSendValidationCode = () => {
-      props.onClick?.();
+    
+    const startCountdown = () => {
       timer.value = setInterval(() => {
         count.value -= 1;
-        console.log(count.value);
-
-        if (count.value === 0) {
-          clearInterval(timer.value);
-          count.value = props.countForm;
-          timer.value = undefined;
+        if(count.value === 0){
+          clearInterval(timer.value)
+          timer.value = undefined
+          count.value = props.countForm
         }
-      }, 1000);
-    };
+      }, 1000)
+    }
+    context.expose({ startCountdown })
 
     const content = computed(() => {
       switch (props.type) {
@@ -104,7 +103,7 @@ export const FormItem = defineComponent({
               />
               <Button
                 disabled={isCounting.value}
-                onClick={onClickSendValidationCode}
+                onClick={props.onClick}
                 class={[s.formItem, s.button, s.validationCodeButton]}
               >
                 {isCounting.value
