@@ -1,9 +1,9 @@
 import { DatePicker, Popup } from "vant";
-import { computed, defineComponent, PropType, ref, toRaw } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import { Button } from "./Button";
 import { EmojiSelect } from "./EmojiSelect";
 import s from "./Form.module.scss";
-import { Time } from "./time";
+import { getFriendlyError } from "./getFriendlyError";
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -162,7 +162,7 @@ export const FormItem = defineComponent({
             {props.label && <span class={s.formItem_name}>{props.label}</span>}
             <div class={s.formItem_value}>{content.value}</div>
             <div class={s.formItem_errorHint}>
-              <span>{props.error ?? "　"}</span>
+              <span>{props.error ? getFriendlyError(props.error) : "　"}</span>
             </div>
           </label>
         </div>
