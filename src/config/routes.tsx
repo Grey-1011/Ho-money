@@ -11,6 +11,7 @@ import { Second } from '../components/welcome/Second'
 import { SecondAction } from '../components/welcome/SecondAction'
 import { Third } from '../components/welcome/Third'
 import { ThirdAction } from '../components/welcome/ThirdAction'
+import { http } from '../shared/Http'
 import { ItemPage } from '../views/ItemPage'
 import { SignInPage } from '../views/SignInPage'
 import { StartPage } from '../views/StartPage'
@@ -35,6 +36,12 @@ export const routes:Readonly<RouteRecordRaw[]> = [
   },
   { path: '/start', component: StartPage },
   { path: '/items', component: ItemPage,
+    beforeEnter: async(to, form, next) => {
+      await http.get('/me').catch(()=>{
+        next('/sign_in?return_to=' + to.path )
+      })
+      next()
+    },
     children: [
       { path: '', component: ItemList },
       { path: 'create', component: ItemCreate }
