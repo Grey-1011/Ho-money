@@ -36,12 +36,12 @@ export const routes:Readonly<RouteRecordRaw[]> = [
   },
   { path: '/start', component: StartPage },
   { path: '/items', component: ItemPage,
-    beforeEnter: async(to, form, next) => {
-      await http.get('/me').catch(()=>{
-        next('/sign_in?return_to=' + to.path )
-      })
-      next()
-    },
+    // beforeEnter: async(to, form, next) => {
+    //   await http.get('/me').catch(()=>{
+    //     next('/sign_in?return_to=' + to.path )
+    //   })
+    //   next()
+    // },
     children: [
       { path: '', component: ItemList },
       { path: 'create', component: ItemCreate }
