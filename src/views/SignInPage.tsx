@@ -1,4 +1,5 @@
 import { defineComponent, reactive, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
@@ -21,7 +22,10 @@ export const SignInPage = defineComponent({
       email: [],
       code: [],
     });
+    const route = useRoute()
+    const router = useRouter()
 
+    
     const onSubmit = async (e: Event) => {
       e.preventDefault();
       Object.assign(errors, {
@@ -43,7 +47,10 @@ export const SignInPage = defineComponent({
       if(!hasError(errors)){
         const response = await http.post<{jwt: string}>("/session", formData);
         localStorage.setItem('jwt', response.data.jwt);
-        history.push('/')
+        const returnTo = route.query.return_to?.toString()
+        if(returnTo){
+          router.push(returnTo || '/')
+        }
       }
     };
     const onError = (error: any) => {
