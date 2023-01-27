@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
-import { mockSession } from "../mock/mock"
+import { mockSession, mockTagIndex } from "../mock/mock"
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'data' | 'url' | 'method'>
@@ -17,19 +17,19 @@ export class Http {
   //CRUD
   get<R = unknown>(url: string, query?: Record<string, string>, config?: GetConfig){
     return this.instance.request<R>({
+      ...config,
       url,
       params: query,
-      ...config,
       method: 'GET'
     })
   }
 
   post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PostConfig){
     return this.instance.request<R>({
+      ...config, 
       url,
       data,
-      method: 'POST',
-      ...config  
+      method: 'POST'
     })
 
   }
@@ -58,9 +58,10 @@ const mock = (response: AxiosResponse) => {
     return false
   }
   switch (response.config?.params?._mock){
-    // case 'tagIndex':
-    //   [response.status, response.data] = mockTagIndex(response.config)
-    //   return true
+    case 'tagIndex':
+      [response.status, response.data] = mockTagIndex(response.config)
+      console.log(response);
+      return true
     // case 'itemCreate':
     //   [response.status, response.data] = mockItemCreate(response.config)
     //   return true
@@ -101,7 +102,6 @@ http.instance.interceptors.response.use(response => {
 
 
 http.instance.interceptors.response.use(response => {
-  console.log(response)
   return response
 }, (error) => {
   if(error.response){

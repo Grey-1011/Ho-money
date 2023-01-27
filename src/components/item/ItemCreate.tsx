@@ -1,5 +1,6 @@
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, onMounted, PropType, ref } from 'vue';
 import { MainLayout } from '../../layouts/MainLayout';
+import { http } from '../../shared/Http';
 import { Icon } from '../../shared/Icon';
 import { Tab, Tabs } from '../../shared/Tabs';
 import { InputPad } from './InputPad';
@@ -12,41 +13,23 @@ export const ItemCreate = defineComponent({
   },
   setup(props, context) {
     const kind = ref('支出');
-    const refExpensesTags = ref([
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-      { id: 1, name: '餐饮', sign: '$', category: 'expenses' },
-      { id: 2, name: '交通', sign: '$', category: 'expenses' },
-      { id: 3, name: '购物', sign: '$', category: 'expenses' },
-    ])
-
-    const refIncomeTags = ref([
-      { id: 4, name: '工资', sign: 'salary', category: 'income' },
-      { id: 5, name: '奖金', sign: 'bonus', category: 'income' },
-      { id: 6, name: '兼职', sign: 'parttime', category: 'income' },
-    ])
+    
+    onMounted(async () => {
+      const response = await http.get<{ resources: Tag[] }>('/tags', {
+        kind: 'expenses',
+        _mock: 'tagIndex'
+      })
+      refExpensesTags.value = response.data.resources
+    })
+    const refExpensesTags = ref<Tag[]>([])
+    onMounted(async () => {
+      const response = await http.get<{ resources: Tag[] }>('/tags', {
+        kind: 'income',
+        _mock: 'tagIndex'
+      })
+      refIncomeTags.value = response.data.resources
+    })
+    const refIncomeTags = ref<Tag[]>([])
 
     return () => (
       <MainLayout class={s.layout}>{
