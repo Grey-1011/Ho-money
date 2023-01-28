@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { mockSession, mockTagIndex } from "../mock/mock"
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
-type PostConfig = Omit<AxiosRequestConfig, 'data' | 'url' | 'method'>
+type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
 type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
 
@@ -15,7 +15,7 @@ export class Http {
   }
 
   //CRUD
-  get<R = unknown>(url: string, query?: Record<string, string>, config?: GetConfig){
+  get<R = unknown>(url: string, query?: Record<string, JSONValue>, config?: GetConfig){
     return this.instance.request<R>({
       ...config,
       url,

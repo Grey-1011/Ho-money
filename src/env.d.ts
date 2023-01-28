@@ -18,7 +18,7 @@ type Tag = {
 }
 
 type Resources<T = any> = {
-  resources: T[]
+  resources: T[],
   pager: {
     page: number,
     per_page: number,
