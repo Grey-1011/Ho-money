@@ -60,7 +60,6 @@ const mock = (response: AxiosResponse) => {
   switch (response.config?.params?._mock){
     case 'tagIndex':
       [response.status, response.data] = mockTagIndex(response.config)
-      console.log(response);
       return true
     // case 'itemCreate':
     //   [response.status, response.data] = mockItemCreate(response.config)
