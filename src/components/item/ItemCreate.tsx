@@ -3,6 +3,7 @@ import { showDialog } from 'vant';
 import { defineComponent, reactive, ref } from 'vue';
 import { routerKey, useRouter } from 'vue-router';
 import { MainLayout } from '../../layouts/MainLayout';
+import { BackIcon } from '../../shared/BackIcon';
 import { http } from '../../shared/Http';
 import { Icon } from '../../shared/Icon';
 import { Tab, Tabs } from '../../shared/Tabs';
@@ -31,7 +32,7 @@ export const ItemCreate = defineComponent({
 
     const onSubmit = async () => {
       await http
-        .post<Resource<Item>>('/items', formData,{
+        .post<Resource<Item>>('/items', formData, {
           params: { _mock: 'itemCreate' },
         })
         .catch(onError);
@@ -43,7 +44,7 @@ export const ItemCreate = defineComponent({
       <MainLayout class={s.layout}>
         {{
           title: () => '记一笔',
-          icon: () => <Icon name="back" class={s.navIcon} />,
+          icon: () => <BackIcon />,
           default: () => (
             <>
               <div class={s.wrapper}>

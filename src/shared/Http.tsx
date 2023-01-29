@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { mockItemCreate, mockSession, mockTagIndex } from "../mock/mock"
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
-type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
+type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method' | 'headers'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
 type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
 
