@@ -10,7 +10,10 @@ import { calculate } from '../../shared/calculate';
 export const InputPad = defineComponent({
   props: {
     happenAt: String,
-    amount: Number
+    amount: Number,
+    onSubmit: {
+      type: Function as PropType<() => void>
+    }
   },
   emits: ['update:happenAt', 'update:amount'],
   
@@ -57,7 +60,11 @@ export const InputPad = defineComponent({
       { text: '清空', onClick: () => { refAmount.value = '0'} },
       { text: '+', onClick: () => { handleAdd('+') } },
       { text: '-', onClick: () => { handleSubtract('-') } },
-      { text: '提交', onClick: () => { context.emit('update:amount', parseFloat(refAmount.value) * 100) } },
+      { text: '提交', onClick: () => { 
+        context.emit('update:amount', parseFloat(refAmount.value) * 100) 
+        props.onSubmit?.()
+        }
+      },
     ]
     
     return () => <>
