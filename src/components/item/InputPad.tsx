@@ -8,17 +8,24 @@ import { DatePicker, Popup } from 'vant';
 import { calculate } from '../../shared/calculate';
 
 export const InputPad = defineComponent({
+  props: {
+    happenAt: String,
+    amount: Number
+  },
+  emits: ['update:happenAt', 'update:amount'],
   
   setup(props, context) {
-    // 将 Date 转换为  string[]
-    const now = [...new Date().toLocaleDateString().split('/')]
-    const refDate = ref<string[]>(now)
     const refDatePickerVisible = ref(false)
     const showDatePicker = () => refDatePickerVisible.value = true
     const hideDatePicker = () => refDatePickerVisible.value = false
-    const setDate = (val: { selectedValues: string[]; }) => { refDate.value = val.selectedValues; hideDatePicker() }
 
-    const refAmount = ref('0');
+    const setDate = (val: { selectedValues: string[] } ) => { 
+      context.emit('update:happenAt', val.selectedValues.join('-') )
+      hideDatePicker() 
+    }
+
+    
+    const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
 
     const handleClick = (n: string | number) => {
       calculate(refAmount, n)
@@ -50,7 +57,7 @@ export const InputPad = defineComponent({
       { text: '清空', onClick: () => { refAmount.value = '0'} },
       { text: '+', onClick: () => { handleAdd('+') } },
       { text: '-', onClick: () => { handleSubtract('-') } },
-      { text: '=|√', onClick: () => { } },
+      { text: '提交', onClick: () => { context.emit('update:amount', parseFloat(refAmount.value) * 100) } },
     ]
     
     return () => <>
@@ -58,9 +65,9 @@ export const InputPad = defineComponent({
         <span class={s.date}>
           <Icon name='date' class={s.icon}/>
           <span>
-            <span onClick={ showDatePicker }>{new Time(new Date(refDate.value.toLocaleString())).format()}</span>
+            <span onClick={ showDatePicker }>{new Time(props.happenAt).format()}</span>
               <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
-	              <DatePicker modelValue={refDate.value} title="选择日期" 
+	              <DatePicker modelValue={props.happenAt?.split('-')} title="选择日期" 
                   onConfirm={ setDate }
                   onCancel={ hideDatePicker }
                 />
