@@ -46,10 +46,6 @@ export const TagForm = defineComponent({
         
         await promise.catch((error) => onFormError(error, (data) => Object.assign(errors, data.errors)) )
 
-        showToast({
-          message: '标签添加成功',
-          position: 'top',
-        });
         router.back()
       }
     }

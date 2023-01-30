@@ -92,7 +92,6 @@ export const SignInPage = defineComponent({
                   v-model={formData.email}
                   error={errors["email"]?.[0]}
                 />
-                <div>{ JSON.stringify(formData) }</div>
                 <FormItem
                   ref={refValidationCode}
                   label="验证码"
