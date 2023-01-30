@@ -29,7 +29,10 @@ type Resources<T = any> = {
     page: number;
     per_page: number;
     count: number;
-  };
+  }
+  data: {
+    total: number;
+  }
 };
 
 type Item = {
@@ -41,6 +44,7 @@ type Item = {
   kind: expenses | income;
   tags: Tag[]
 };
+
 
 type Resource<T> = {
   resource: T;

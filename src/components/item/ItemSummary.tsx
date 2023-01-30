@@ -1,7 +1,9 @@
 import { number } from 'echarts';
-import { defineComponent, onMounted, PropType, reactive, ref } from 'vue';
+import { computed, defineComponent, onMounted, PropType, reactive, ref } from 'vue';
 import { Button } from '../../shared/Button';
+import { Datetime } from '../../shared/Datetime';
 import { http } from '../../shared/Http';
+import { Money } from '../../shared/Money';
 import { Time } from '../../shared/time';
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
@@ -35,18 +37,47 @@ export const ItemSummary = defineComponent({
     }
 
     onMounted( fetchItems )
-    
+
     // 向父组件暴露方法
     context.expose({
       fetchItems
     })
 
+    const itemBalance = reactive({
+      expensesTotal: 0,incomeTotal: 0
+    })
+    const balance = computed(() => itemBalance.incomeTotal - itemBalance.expensesTotal )
+
+    const fetchSummary = async (kind: string) => {
+      if(!props.startDate || !props.endDate){ return }
+      const response = await http.get<Resources['data']>('/items/summary', {
+        happened_after: props.startDate,
+        happened_before: props.endDate,
+        kind: kind,
+        group_by: 'happen_at',
+        _mock: 'itemSummary'
+      })
+      console.log(response.data)
+
+      if(kind === 'expenses'){
+        itemBalance.expensesTotal = response.data.total
+      }else{ 
+        itemBalance.incomeTotal = response.data.total
+      }
+      
+    }
+
+    onMounted(() => {
+      fetchSummary('expenses')
+      fetchSummary('income')
+    })
+
     return () => (
       <div class={s.wrapper}>
         <ul class={s.total}>
-          <li><span>收入</span><span>128</span></li>
-          <li><span>支出</span><span>99</span></li>
-          <li><span>净收入</span><span>39</span></li>
+          <li><span>收入</span><span>{itemBalance.incomeTotal}</span></li>
+          <li><span>支出</span><span>{itemBalance.expensesTotal}</span></li>
+          <li><span>净收入</span><span>{balance.value}</span></li>
         </ul>
         <ol class={s.list}>
           {items.value.map(item => {
@@ -57,10 +88,10 @@ export const ItemSummary = defineComponent({
               <div class={s.text}>
                 <div class={s.tagAndAmount}>
                   <span class={s.tag}>{item.tags[0].sign}</span>
-                  <span class={s.amount}>￥{item.amount}</span>
+                  <span class={s.amount}>￥<Money value={item.amount}/></span>
                 </div>
                 <div class={s.time}>
-                  {new Time(item.happen_at).format()}
+                  <Datetime value={item.happen_at} />
                 </div>
               </div>
             </li>})  
