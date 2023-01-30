@@ -7,20 +7,20 @@ import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
     startDate: { 
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     endDate: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     }
   },
   setup(props, context) {
+    
     const items = ref<Item[]>([])
     const page = ref(0)
     const hasMore = ref(false)
     
     const fetchItems = async () => {
+      if(!props.startDate || !props.endDate){ return }
       const response = await http.get<Resources<Item>>(`/items`,{
         created_after: props.startDate,
         created_before: props.endDate,
@@ -35,6 +35,11 @@ export const ItemSummary = defineComponent({
     }
 
     onMounted( fetchItems )
+    
+    // 向父组件暴露方法
+    context.expose({
+      fetchItems
+    })
 
     return () => (
       <div class={s.wrapper}>

@@ -9,18 +9,18 @@ import { MainLayout } from './MainLayout';
 import { ItemSummary } from '../components/item/ItemSummary';
 
 // TODO Object as PropType<typeof demo> is not working
-const demo = defineComponent({
-  props: {
-    startDate: {
-      type: String as PropType<string>,
-      required: true
-    },
-    endDate: {
-      type: String as PropType<string>,
-      required: true
-    }
-  },
-})
+// const demo = defineComponent({
+//   props: {
+//     startDate: {
+//       type: String as PropType<string>,
+//       required: true
+//     },
+//     endDate: {
+//       type: String as PropType<string>,
+//       required: true
+//     }
+//   },
+// })
 export const TimeTabsLayout = defineComponent({
   props: {
     component: {
@@ -31,10 +31,10 @@ export const TimeTabsLayout = defineComponent({
   setup(props, context) {
     const refSelected = ref('本月')
     const time = new Time();
-    const customTime = reactive({ 
-      start: new Time().format(), 
-      end: new Time().format() 
-    })
+    const customTime = reactive<{
+      start?: string,
+      end?: string
+    }>({})
     
     const timeList = [
       { start: time.firstDayOfMonth(), end: time.lastDayOfMonth() },
@@ -44,8 +44,11 @@ export const TimeTabsLayout = defineComponent({
     
     const refOverlayVisible = ref(false)
 
+    const customTimeSubmit = ref()
+
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
+      customTimeSubmit.value.fetchItems()
       refOverlayVisible.value = false
     }
     const onCancelCustomTime = () => {
@@ -77,37 +80,36 @@ export const TimeTabsLayout = defineComponent({
               <props.component startDate={ timeList[2].start.format() } endDate={ timeList[2].end.format() }/>
             </Tab>
             <Tab name='自定义时间'>
-              <props.component startDate={ customTime.start } endDate={ customTime.end }/>
+              <props.component ref={customTimeSubmit} startDate={ customTime.start } endDate={ customTime.end }/>
             </Tab>
           </Tabs>
 
-          <Overlay show={refOverlayVisible.value} class={s.overlay}>
-          <div class={s.overlay_inner}>
-            <header>
-              请选择时间
-            </header>
-            <main>
-              <Form onSubmit={onSubmitCustomTime}> 
-                <FormItem
-                  label='开始时间'
-                  type='date'
-                  v-model={customTime.start}
-                />
-                <FormItem
-                  label='结束时间'
-                  type='date'
-                  v-model={customTime.end}
-                />
-                <FormItem>
-                  <div class={s.actions}>
-                    <button type="button" onClick={onCancelCustomTime}>取消</button>
-                    <button type="submit">确认</button>
-                  </div>
-                </FormItem>
-                
-              </Form>
-            </main>
-          </div>
+          <Overlay show={refOverlayVisible.value} class={s.overlay} >
+            <div class={s.overlay_inner}>
+              <header>
+                请选择时间
+              </header>
+              <main>
+                <Form onSubmit={onSubmitCustomTime}> 
+                  <FormItem
+                    label='开始时间'
+                    type='date'
+                    v-model={customTime.start}
+                  />
+                  <FormItem
+                    label='结束时间'
+                    type='date'
+                    v-model={customTime.end}
+                  />
+                  <FormItem>
+                    <div class={s.actions}>
+                      <button type="button" onClick={onCancelCustomTime}>取消</button>
+                      <button type="submit">确认</button>
+                    </div>
+                  </FormItem>
+                </Form>
+              </main>
+            </div>
           </Overlay>
         </>
        } 
