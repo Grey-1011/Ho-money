@@ -30,14 +30,14 @@ export const FormItem = defineComponent({
       type: String,
     },
     modelValue: {
-      type: [String, Number, Array] as PropType<string | number | string[]>,
+      type: [String, Number] as PropType<string | number>,
     },
     error: {
       type: String,
     },
-    SelectDate: {
-      type: Array as PropType<string[]>,
-    },
+    // SelectDate: {
+    //   type: Array as PropType<string[]>,
+    // },
     placeholder: {
       type: String,
     },
@@ -144,11 +144,11 @@ export const FormItem = defineComponent({
               />
               <Popup position="bottom" v-model:show={refDateVisible.value}>
                 <DatePicker
-                  modelValue={props.SelectDate}
+                  modelValue={props.modelValue?.toString().split('-')}
                   title="选择年月日"
                   // onUpdate:modelValue={value => { context.emit('update:modelValue', value.join('-'))
                   onConfirm={({ selectedValues }) => {
-                    context.emit("update:modelValue", selectedValues.join("-"));
+                    context.emit("update:modelValue", selectedValues.join('-'));
                     refDateVisible.value = false;
                   }}
                   onCancel={() => (refDateVisible.value = false)}

@@ -102,3 +102,46 @@ export const mockTagEdit: Mock = config => {
     })
   return [200, {resource: createTag()}]
 }
+
+export const mockItemIndex: Mock = (config) => {
+  const { kind, page } = config.params
+  const per_page = 25
+  const count = 26
+  const createPaper = (page = 1) => ({
+    page,
+    per_page,
+    count,
+  })
+  const createItem = (n = 1, attrs?: any) =>
+    Array.from({ length: n }).map(() => ({
+      id: createId(),
+      user_id: createId(),
+      amount: Math.floor(Math.random() * 10000),
+      tags_id: [createId()],
+      happen_at: faker.date.past().toISOString(),
+      kind: config.params.kind,
+      tags: [
+        {
+          id: 211,
+          user_id: 80,
+          name: "Eum.",
+          sign: "😡",
+          deleted_at: null,
+          created_at: "2023-01-13T21:50:08.953+08:00",
+          updated_at: "2023-01-13T21:50:08.953+08:00",
+          kind: "expenses"
+        }
+      ]
+    }))
+  const createBody = (n = 1, attrs?: any) => ({
+    resources: createItem(n),
+    pager: createPaper(page),
+  })
+  if (!page || page === 1) {
+    return [200, createBody(25)]
+  } else if (page === 2) {
+    return [200, createBody(1)]
+  }else{
+    return [200, {}]
+  }
+}
