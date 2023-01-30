@@ -11,7 +11,6 @@ export const EmojiSelect = defineComponent({
     }
   },
   setup(props, context) {
-    console.log(emojiList);
     const table: [string, string[]][] = [
       ['收支',['money']],
       ['出行',['transport-ground','transport-water','transport-air']],
