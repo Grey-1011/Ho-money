@@ -31,6 +31,12 @@ export const TimeTabsLayout = defineComponent({
   setup(props, context) {
     const refSelected = ref('本月')
     const time = new Time();
+
+    const tempTime = reactive({
+      start: time.format(),
+      end: time.format()
+    })
+
     const customTime = reactive<{
       start?: string,
       end?: string
@@ -44,11 +50,9 @@ export const TimeTabsLayout = defineComponent({
     
     const refOverlayVisible = ref(false)
 
-    const customTimeSubmit = ref()
-
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
-      customTimeSubmit.value.fetchItems()
+      Object.assign(customTime, tempTime)
       refOverlayVisible.value = false
     }
     const onCancelCustomTime = () => {
@@ -80,7 +84,7 @@ export const TimeTabsLayout = defineComponent({
               <props.component startDate={ timeList[2].start.format() } endDate={ timeList[2].end.format() }/>
             </Tab>
             <Tab name='自定义时间'>
-              <props.component ref={customTimeSubmit} startDate={ customTime.start } endDate={ customTime.end }/>
+              <props.component startDate={ customTime.start } endDate={ customTime.end }/>
             </Tab>
           </Tabs>
 
@@ -94,12 +98,12 @@ export const TimeTabsLayout = defineComponent({
                   <FormItem
                     label='开始时间'
                     type='date'
-                    v-model={customTime.start}
+                    v-model={tempTime.start}
                   />
                   <FormItem
                     label='结束时间'
                     type='date'
-                    v-model={customTime.end}
+                    v-model={tempTime.end}
                   />
                   <FormItem>
                     <div class={s.actions}>

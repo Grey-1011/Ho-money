@@ -1,5 +1,5 @@
 import { number } from 'echarts';
-import { computed, defineComponent, onMounted, PropType, reactive, ref } from 'vue';
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { Button } from '../../shared/Button';
 import { Datetime } from '../../shared/Datetime';
 import { http } from '../../shared/Http';
@@ -38,9 +38,21 @@ export const ItemSummary = defineComponent({
 
     onMounted( fetchItems )
 
-    // 向父组件暴露方法
-    context.expose({
-      fetchItems
+    watch(()=>{
+      return [props.startDate, props.endDate]
+    },()=>{
+      items.value = []
+      hasMore.value = false
+      page.value = 0
+      fetchItems()
+    })
+
+    watch(()=>{
+      return [props.startDate, props.endDate]
+    }, ()=>{
+      Object.assign(itemBalance, {expensesTotal: 0,incomeTotal: 0})
+      fetchSummary('expenses')
+      fetchSummary('income')
     })
 
     const itemBalance = reactive({
@@ -57,7 +69,6 @@ export const ItemSummary = defineComponent({
         group_by: 'happen_at',
         _mock: 'itemSummary'
       })
-      console.log(response.data)
 
       if(kind === 'expenses'){
         itemBalance.expensesTotal = response.data.total
