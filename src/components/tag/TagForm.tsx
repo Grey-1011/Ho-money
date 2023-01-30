@@ -1,5 +1,5 @@
 import { showToast } from 'vant';
-import { defineComponent, PropType, reactive } from 'vue';
+import { defineComponent, onMounted, PropType, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Button } from '../../shared/Button';
 import { Form, FormItem } from '../../shared/Form';
@@ -8,12 +8,15 @@ import { onFormError } from '../../shared/onFormError';
 import { hasError, Rules, validate } from '../../shared/validate';
 import s from './Tag.module.scss';
 export const TagForm = defineComponent({
-
+  props: {
+    id: Number
+  },
   setup(props, context) {
     const route = useRoute()
     const router = useRouter()
   
-    const formData = reactive({
+    const formData = reactive<Partial<Tag>>({
+      id: undefined,
       kind: route.query.kind!.toString(),
       name: '',
       sign: '',
@@ -35,11 +38,14 @@ export const TagForm = defineComponent({
       })
       Object.assign(errors, validate(formData, rules))
       if(!hasError(errors)){
-        const response = await http.post('/tags', formData, {
-          params:{ _mock: 'TagCreate' }
-        }).catch(error => 
-          onFormError(error, (data) => Object.assign(errors, data.errors))
-        )
+        const promise = formData.id ?
+          // 修改
+          http.patch(`/tags/${formData.id}`, formData, { params: { _mock: 'tagEdit' } }) :
+          // 新建
+          http.post('/tags', formData, { params: {_mock: 'tagCreate'} })
+        
+        await promise.catch((error) => onFormError(error, (data) => Object.assign(errors, data.errors)) )
+
         showToast({
           message: '标签添加成功',
           position: 'top',
@@ -47,6 +53,15 @@ export const TagForm = defineComponent({
         router.back()
       }
     }
+
+    onMounted(async ()=>{
+      if(!props.id){ return }
+      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
+        _mock: 'tagShow'
+      })
+      console.log(response);
+      Object.assign(formData,response.data.resource)
+    })
 
     return () => (
       <Form onSubmit={onSubmit}>
