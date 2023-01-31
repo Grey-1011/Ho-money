@@ -17,6 +17,7 @@ export const Charts = defineComponent({
   },
   setup(props, context) {
     const category = ref("expenses");
+    
     return () => (
       <div class={s.wrapper}>
         <FormItem

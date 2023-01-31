@@ -30,7 +30,7 @@ export const Overlay = defineComponent({
     onMounted(async () => {
       const response = await mePromise;
       me.value = response?.data.resource;
-      console.log(response?.data.resource);
+      // console.log(response?.data.resource);
     });
 
     return () => (
