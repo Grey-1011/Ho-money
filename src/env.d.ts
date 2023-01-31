@@ -21,6 +21,7 @@ type Tag = {
   name: string;
   sign: string;
   kind: expenses | income;
+  created_at: string;
 };
 
 type User = {

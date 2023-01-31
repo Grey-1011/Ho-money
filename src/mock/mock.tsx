@@ -145,3 +145,31 @@ export const mockItemIndex: Mock = (config) => {
     return [200, {}]
   }
 }
+
+export const mockItemSummary: Mock = (config) => {
+  return [200, {
+    "groups": [
+      { 
+        "amount": 100, 
+        "tag": {"created_at": "2018-06-18T00:00:00.000+0800"}
+      },
+      { 
+        "tag": {"created_at": "2018-06-22T00:00:00.000+0800",},
+        "amount": 300 
+      },
+      {
+        "tag": {"created_at": "2018-06-29T00:00:00.000+0800"},
+         "amount": 500 
+      },
+      {
+        "tag": {"created_at": "2018-06-30T00:00:00.000+0800"},
+         "amount": 800 
+      },
+      {
+        "tag": {"created_at": "2018-07-29T00:00:00.000+0800"},
+         "amount": 200 
+      }
+    ],
+    "total": 600
+  }]
+}
