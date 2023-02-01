@@ -46,11 +46,10 @@ export const Charts = defineComponent({
         happened_after: props.startDate!,
         happened_before: props.endDate!,
         kind: kind.value,
-        group_by: 'happen_at',
-        // _mock: 'itemSummary',
-      })
+        group_by: 'happen_at'
+      },
+      { _mock: 'itemSummary' })
       data1.value = response.data.groups
-      console.log('res.data=>',response.data.groups);
       
     }
     onMounted(fetchData1)
@@ -66,13 +65,12 @@ export const Charts = defineComponent({
     )
 
     const fetchData2 = async () => {
-      const response = await http.get<{groups: Data2, total: number}>('/items/summary', {
+      const response = await http.get<{groups: Data2, total: number}>('/items/summary',{
         happened_after: props.startDate!,
         happened_before: props.endDate!,
         kind: kind.value,
-        group_by: 'tag_id',
-        _mock: 'itemSummary',
-      })
+        group_by: 'tag_id'
+      },{ _mock: 'itemSummary' })
       data2.value = response.data.groups
     }
     onMounted(fetchData2)

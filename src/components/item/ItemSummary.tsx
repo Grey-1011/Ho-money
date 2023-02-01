@@ -27,8 +27,8 @@ export const ItemSummary = defineComponent({
         created_after: props.startDate,
         created_before: props.endDate,
         page: page.value + 1,
-        _mock: 'itemIndex',
-      })
+      },
+      { _mock: 'itemIndex' })
       const { resources, pager } = response.data
       items.value.push(...resources)
       hasMore.value = (pager.page - 1) * pager.per_page - resources.length < pager.count
@@ -66,9 +66,9 @@ export const ItemSummary = defineComponent({
         happened_after: props.startDate,
         happened_before: props.endDate,
         kind: kind,
-        group_by: 'happen_at',
-        _mock: 'itemSummary'
-      })
+        group_by: 'happen_at'
+      },
+      { _mock: 'itemSummary' })
 
       if(kind === 'expenses'){
         itemBalance.expensesTotal = response.data.total

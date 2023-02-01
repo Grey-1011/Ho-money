@@ -2,10 +2,10 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { closeToast, showLoadingToast } from "vant"
 import { mockItemCreate, mockItemIndex, mockItemSummary, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock"
 
-type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
+type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method' | 'headers'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method' | 'headers'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'headers'>
-type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
+type DeleteConfig = Omit<AxiosRequestConfig, 'params' | 'headers'>
 
 export class Http {
   instance: AxiosInstance
