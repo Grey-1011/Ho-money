@@ -36,23 +36,25 @@ export const Charts = defineComponent({
       return Array.from({length: n}).map((_, i) => {
         const time = new Time(props.startDate+'T00:00:00.000+0800').add(i, 'day').getTimestamp()
         const item = data1.value[0]
-        const amount = item && new Date(item.tag.created_at).getTime() === time ? data1.value.shift()!.amount : 0
+        const amount = item && new Date(item.tag?.created_at).getTime() === time ? data1.value.shift()!.amount : 0
         return [new Date(time).toISOString(), amount]
       })
     })
  
-    onMounted(async () => {
+    const fetchData1 = async () => {
       const response = await http.get<{groups: Data1, total: number}>('/items/summary', {
         happened_after: props.startDate!,
         happened_before: props.endDate!,
-        kind: 'expenses',
+        kind: kind.value,
         group_by: 'happen_at',
-        _mock: 'itemSummary',
+        // _mock: 'itemSummary',
       })
       data1.value = response.data.groups
       console.log('res.data=>',response.data.groups);
       
-    })
+    }
+    onMounted(fetchData1)
+    watch(() => kind.value, fetchData1)
     
     // data2
     const data2 = ref<Data2>([])
@@ -63,16 +65,26 @@ export const Charts = defineComponent({
       }))
     )
 
-
-    onMounted(async () => {
+    const fetchData2 = async () => {
       const response = await http.get<{groups: Data2, total: number}>('/items/summary', {
         happened_after: props.startDate!,
         happened_before: props.endDate!,
-        kind: 'expenses',
+        kind: kind.value,
         group_by: 'tag_id',
         _mock: 'itemSummary',
       })
       data2.value = response.data.groups
+    }
+    onMounted(fetchData2)
+    watch(() => kind.value, fetchData2)
+
+    // data3
+    const betterData3 = computed<{tag: Tag, amount: number, percent: number }[]>(() => {
+      const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
+      return data2.value.map(item => ({
+          ...item,
+          percent: Math.round(item.amount / total * 100)
+      }))
     })
 
     return () => (
@@ -88,7 +100,7 @@ export const Charts = defineComponent({
         />
         <LineChart data={betterData1.value}/>
         <PieChart data={betterData2.value}/>
-        <Bars />
+        <Bars data={betterData3.value}/>
       </div>
     );
   },
