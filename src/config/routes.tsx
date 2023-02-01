@@ -11,6 +11,7 @@ import { Second } from '../components/welcome/Second'
 import { SecondAction } from '../components/welcome/SecondAction'
 import { Third } from '../components/welcome/Third'
 import { ThirdAction } from '../components/welcome/ThirdAction'
+import { ComingSoon } from '../shared/ComingSoon'
 import { http } from '../shared/Http'
 import { ItemPage } from '../views/ItemPage'
 import { SignInPage } from '../views/SignInPage'
@@ -58,5 +59,11 @@ export const routes:Readonly<RouteRecordRaw[]> = [
   },
   {
     path: '/statistics', component: StatisticsPage
+  },
+  {
+    path: '/export', component: ComingSoon
+  },
+  {
+    path: '/remind', component: ComingSoon
   }
 ]
