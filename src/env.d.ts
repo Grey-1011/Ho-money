@@ -13,7 +13,7 @@ type JSONValue =
   | null
   | boolean
   | JSONValue[]
-  | { [key: string]: JSONValue };
+  | Record<string, JSONValue>;
 
 type Tag = {
   id: number;
@@ -46,9 +46,9 @@ type Item = {
   id: number;
   user_id: number;
   amount: number;
-  tags_id: number[];
+  tag_ids: number[];
   happen_at: string;
-  kind: expenses | income;
+  kind: 'expenses' | 'income';
   tags: Tag[]
 };
 
@@ -60,3 +60,5 @@ type Resource<T> = {
 type ResourceError = {
   errors: Record<string, string[]>;
 };
+
+type FormErrors<T> = {[K in keyof typeof T]: string[]}
