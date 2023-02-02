@@ -4,7 +4,6 @@ export const Tabs = defineComponent({
   props: {
     selected: {
       type: String as PropType<string>,
-      required: false
     },
     classPrefix: {
       type: String
@@ -29,7 +28,7 @@ export const Tabs = defineComponent({
       return <div class={[s.tabs, cp + '_tabs' ]}>
         <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
           { tabs.map(item =>
-            <li class={[item.props?.value === props.selected ? s.selected : '', cp + '_tabs_nav_item']}
+            <li class={[item.props?.value === props.selected ? [s.selected, cp + '_selected'] : '', cp + '_tabs_nav_item']}
               onClick={() => context.emit('update:selected', item.props?.value)}
             >
               {item.props?.name}
