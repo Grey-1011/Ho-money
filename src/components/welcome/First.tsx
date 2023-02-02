@@ -5,9 +5,9 @@ export const First: FunctionalComponent = () => {
   return (
     <div class={s.card}>
       <svg>
-        <use xlinkHref='#balance'></use>
+        <use xlinkHref='#firstAd'></use>
       </svg>
-      <h2>会挣钱<br />还要会省钱</h2>
+      <h4>会挣钱<br />还要会省钱</h4>
     </div>
   )
 }
