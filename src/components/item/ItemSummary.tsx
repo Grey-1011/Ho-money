@@ -1,10 +1,15 @@
-import { number } from 'echarts';
-import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
+
+import { computed, defineComponent, PropType, reactive, watch } from 'vue';
+import { RouterLink } from 'vue-router';
+import { useAfterMe } from '../../hooks/useAfterMe';
 import { Button } from '../../shared/Button';
+import { Center } from '../../shared/Center';
 import { Datetime } from '../../shared/Datetime';
+import { FloatButton } from '../../shared/FloatButton';
 import { http } from '../../shared/Http';
+import { Icon } from '../../shared/Icon';
 import { Money } from '../../shared/Money';
-import { Time } from '../../shared/time';
+import { useItemStore } from '../../stores/useItemStore';
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
@@ -16,36 +21,17 @@ export const ItemSummary = defineComponent({
     }
   },
   setup(props, context) {
-    
-    const items = ref<Item[]>([])
-    const page = ref(0)
-    const hasMore = ref(false)
-    
-    const fetchItems = async () => {
-      if(!props.startDate || !props.endDate){ return }
-      const response = await http.get<Resources<Item>>(`/items`,{
-        created_after: props.startDate,
-        created_before: props.endDate,
-        page: page.value + 1,
-      },
-      { _mock: 'itemIndex' })
-      const { resources, pager } = response.data
-      items.value.push(...resources)
-      hasMore.value = (pager.page - 1) * pager.per_page - resources.length < pager.count
-      page.value += 1
-      // console.log(response);
-    }
+   
+    const itemStore = useItemStore(['items', props.startDate!, props.endDate!])
+    useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate))
 
-    onMounted( fetchItems )
-
-    watch(()=>{
-      return [props.startDate, props.endDate]
-    },()=>{
-      items.value = []
-      hasMore.value = false
-      page.value = 0
-      fetchItems()
-    })
+    watch(
+      () => [props.startDate, props.endDate],
+      () => {
+        itemStore.$reset()
+        itemStore.fetchItems()
+      }
+    )
 
     watch(()=>{
       return [props.startDate, props.endDate]
@@ -63,8 +49,8 @@ export const ItemSummary = defineComponent({
     const fetchSummary = async (kind: string) => {
       if(!props.startDate || !props.endDate){ return }
       const response = await http.get<Resources['data']>('/items/summary', {
-        happened_after: props.startDate,
-        happened_before: props.endDate,
+        happen_after: props.startDate,
+        happen_before: props.endDate,
         kind: kind,
         group_by: 'happen_at'
       },
@@ -78,42 +64,67 @@ export const ItemSummary = defineComponent({
       
     }
 
-    onMounted(() => {
+    useAfterMe(() => {
       fetchSummary('expenses')
       fetchSummary('income')
     })
 
     return () => (
       <div class={s.wrapper}>
-        <ul class={s.total}>
-          <li><span>收入</span><span>￥<Money value={itemBalance.incomeTotal}/></span></li>
-          <li><span>支出</span><span>￥<Money value={itemBalance.expensesTotal}/></span></li>
-          <li><span>净收入</span><span>￥<Money value={balance.value}/></span></li>
-        </ul>
-        <ol class={s.list}>
-          {items.value.map(item => {
-            return <li>
-              <div class={s.sign}>
-                <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
-              </div>
-              <div class={s.text}>
-                <div class={s.tagAndAmount}>
-                  <span class={s.tag}>{ item.tags && item.tags.length > 0 ? item.tags[0].name : '未分类'}</span>
-                  <span class={s.amount}>￥<Money value={item.amount}/></span>
-                </div>
-                <div class={s.time}>
-                  <Datetime value={item.happen_at} />
-                </div>
-              </div>
-            </li>})  
-          }
-        </ol>
-        <div class={s.more}>
-          {hasMore.value ?
-            <Button onClick={fetchItems}>加载更多</Button> :
-            <span>没有更多</span>
-          }
-        </div>
+        {itemStore.items && itemStore.items.length > 0 ? (
+          <>
+            <ul class={s.total}>
+              <li>
+                <span>收入</span>
+                <Money value={itemBalance.incomeTotal} />
+              </li>
+              <li>
+                <span>支出</span>
+                <Money value={itemBalance.expensesTotal} />
+              </li>
+              <li>
+                <span>净收入</span>
+                <Money value={balance.value} />
+              </li>
+            </ul>
+            <ol class={s.list}>
+              {itemStore.items.map((item) => (
+                <li>
+                  <div class={s.sign}>
+                    <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
+                  </div>
+                  <div class={s.text}>
+                    <div class={s.tagAndAmount}>
+                      <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : '未分类'}</span>
+                      <span class={s.amount}>
+                        ￥<Money value={item.amount} />
+                      </span>
+                    </div>
+                    <div class={s.time}>
+                      <Datetime value={item.happen_at} />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div class={s.more}>
+              {itemStore.hasMore ? (
+                <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>加载更多</Button>
+              ) : (
+                <span>没有更多</span>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <Center class={s.pig_wrapper}>
+              <Icon name="finance_male" class={s.pig} />
+            </Center>
+          </>
+        )}
+        <RouterLink to="/items/create">
+          <FloatButton iconName="add" />
+        </RouterLink>
       </div>
     )
   }

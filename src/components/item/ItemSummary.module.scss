@@ -64,3 +64,11 @@
   padding-top: 32px;
   text-align: center;
 }
+
+.pig{
+  width: 8em;
+  height: 8em;
+  &_wrapper{
+    padding: 8em 0;
+  }
+}
