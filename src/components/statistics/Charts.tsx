@@ -7,9 +7,10 @@ import { LineChart } from "./LineChart";
 import { http } from "../../shared/Http";
 import { Time } from "../../shared/time";
 
-type Data1Item = { tag: Tag; amount: number }
+type Data1Item = { happen_at: string, tag: Tag; amount: number }
 type Data1 = Data1Item[]
 
+const DAY = 24 * 3600 * 1000;
 
 type Data2Item = {tag: Tag; amount: number }
 type Data2 = Data2Item[]
@@ -24,7 +25,6 @@ export const Charts = defineComponent({
     }
   },
   setup(props, context) {
-    const DAY = 24 * 3600 * 1000;
 
     const kind = ref("expenses");
     const data1 = ref<Data1>([])
@@ -35,24 +35,24 @@ export const Charts = defineComponent({
       const n = diff / DAY + 1; 
 
       return Array.from({length: n}).map((_, i) => {
-        const time = new Time(props.startDate+'T00:00:00.000+0800').add(i, 'day').getTimestamp()
+        const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp()
         const item = data1.value[0]
-        const amount = item && new Date(item.tag.created_at).getTime() === time ? data1.value[1].amount : 0
+        const amount = item && new Date(item.happen_at + 'T00:00:00.000+0800').getTime() === time ? data1.value.shift()!.amount : 0
         return [new Date(time).toISOString(), amount]
       })
     })
   
     const fetchData1 = async () => {
       const response = await http.get<{groups: Data1, total: number}>('/items/summary', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
+        happened_after: props.startDate,
+        happened_before: props.endDate,
         kind: kind.value,
-        group_by: 'tag_id'
+        group_by: 'happen_at'
       },
       { _mock: 'itemSummary',_autoLoading: true })
       
       data1.value = response.data.groups
-      console.log(response);
+      console.log('lineChart=>>response',response.data);
     }
     onMounted(fetchData1)
     watch(() => kind.value, fetchData1)
