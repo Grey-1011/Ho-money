@@ -1,3 +1,18 @@
+$colors: red, orange, yellow, green, blue, purple;
+$repeat: 20;
+// How often you want the pattern to repeat.
+// Warning: a higher number outputs more CSS.
+
+
+@for $i from 1 through $repeat {
+    .topItem:nth-child(#{length($colors)}n+#{$i}) {
+        .bar_inner {
+          background: lighten(nth($colors, random(length($colors))), 20%);
+        }
+    }
+}
+
+
 .wrapper {
   margin-bottom: 128px;
 }
@@ -43,19 +58,20 @@
       // width: 42px;
     }
   }
-  &:nth-child(1) {
-    .bar_inner {
-      background: #eba953;
-    }
-  }
-  &:nth-child(2) {
-    .bar_inner {
-      background: #53a867;
-    }
-  }
-  &:nth-child(3) {
-    .bar_inner {
-      background: #91cc75;
-    }
-  }
+  // &:nth-child(1) {
+  //   .bar_inner {
+  //     background: #eba953;
+  //   }
+  // }
+  // &:nth-child(2) {
+  //   .bar_inner {
+  //     background: #53a867;
+  //   }
+  // }
+  // &:nth-child(3) {
+  //   .bar_inner {
+  //     background: #91cc75;
+  //   }
+  // }
 }
+
