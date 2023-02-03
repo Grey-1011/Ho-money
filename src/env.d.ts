@@ -23,6 +23,7 @@ type Tag = {
   kind: 'expenses' | 'income';
   amount: number;
   created_at: string;
+  happen_at: string;
 };
 
 type User = {
