@@ -1,4 +1,4 @@
-.tips{
+.tips {
   text-align: center;
   padding: 1em 0;
 }
@@ -45,15 +45,15 @@
   }
 }
 
-.actions{
+.actions {
   padding: 0 1em 1em 1em;
   display: flex;
   justify-content: space-between;
-   .removeTagsAndItems{
-    width: calc(50% - 0.5em);
+  .removeTagsAndItems {
+    width: 100%;
   }
 }
 
-.button{
+.button {
   width: 100%;
 }
