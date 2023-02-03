@@ -7,8 +7,9 @@ import { LineChart } from "./LineChart";
 import { http } from "../../shared/Http";
 import { Time } from "../../shared/time";
 
-type Data1Item = {tag: Tag, amount: number}
+type Data1Item = { tag: Tag; amount: number }
 type Data1 = Data1Item[]
+
 
 type Data2Item = {tag: Tag; amount: number }
 type Data2 = Data2Item[]
@@ -36,22 +37,22 @@ export const Charts = defineComponent({
       return Array.from({length: n}).map((_, i) => {
         const time = new Time(props.startDate+'T00:00:00.000+0800').add(i, 'day').getTimestamp()
         const item = data1.value[0]
-        const amount = item && new Date(item.tag?.created_at).getTime() === time ? data1.value.shift()!.amount : 0
+        const amount = item && new Date(item.tag.created_at).getTime() === time ? data1.value[1].amount : 0
         return [new Date(time).toISOString(), amount]
       })
     })
- 
+  
     const fetchData1 = async () => {
       const response = await http.get<{groups: Data1, total: number}>('/items/summary', {
-        happened_after: props.startDate!,
-        happened_before: props.endDate!,
+        happen_after: props.startDate,
+        happen_before: props.endDate,
         kind: kind.value,
-        group_by: 'happen_at'
+        group_by: 'tag_id'
       },
-      { _mock: 'itemSummary' })
+      { _mock: 'itemSummary',_autoLoading: true })
       
       data1.value = response.data.groups
-      
+      console.log(response);
     }
     onMounted(fetchData1)
     watch(() => kind.value, fetchData1)
@@ -67,8 +68,8 @@ export const Charts = defineComponent({
 
     const fetchData2 = async () => {
       const response = await http.get<{groups: Data2, total: number}>('/items/summary',{
-        happened_after: props.startDate!,
-        happened_before: props.endDate!,
+        happen_after: props.startDate,
+        happen_before: props.endDate,
         kind: kind.value,
         group_by: 'tag_id'
       },{ _mock: 'itemSummary' })

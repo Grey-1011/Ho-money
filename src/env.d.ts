@@ -20,9 +20,9 @@ type Tag = {
   user_id: number;
   name: string;
   sign: string;
-  kind: expenses | income;
+  kind: 'expenses' | 'income';
+  amount: number;
   created_at: string;
-  updated_at: string;
 };
 
 type User = {
