@@ -2,17 +2,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
+  border: 1px solid var(--button-bg);
   background: var(--overlay-mask-bg);
   &_inner {
-    background: var(--bg);
+    background: var(--start-page-bg);
     width: 80vw;
     > header {
       background: var(--main);
       padding: 12px 16px;
       color: var(--dialog-header-text);
     }
-    > main{
+    > main {
       background-color: white;
       height: 25%;
     }

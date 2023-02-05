@@ -1,7 +1,8 @@
 .tabs {
   position: relative;
+  background: var(--start-page-bg);
   &_nav {
-    background: var(--navbar-bg-end);
+    // background: var(--start-page-bg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,7 +19,7 @@
       padding: 0.625em 0;
     
       &.selected {
-        background-color: var(--tabs-selected-bg);
+        // background-color: var(--tabs-selected-bg);
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         color: var(--tabs-selected-text);

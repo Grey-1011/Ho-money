@@ -83,7 +83,6 @@ export const SignInPage = defineComponent({
             <div class={s.wrapper}>
               <div class={s.logo}>
                 <Icon class={s.icon} name="logo" />
-                <h1 class={s.appName}>不叮记账</h1>
               </div>
               <Form onSubmit={onSubmit}>
                 <FormItem

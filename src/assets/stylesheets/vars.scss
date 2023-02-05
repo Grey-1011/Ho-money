@@ -4,35 +4,44 @@
   --welcome-text: white;
   --welcome-bg-start: #fff;
   --welcome-bg-end: #000;
+
+  // startPage
+  --start-page-bg: #fbfbfb;
+
+
+  // navbar
+  --navbar-bg-start: #fff;
+  --navbar-bg-end: #fff;
+  --navbar-text: #000;
   
   --z-index-bottom-nav: 8;
   --z-index-overlay: 16;
   --welcome-nav-height: 4rem;
   --transition-duration: 0.5s;
-  --button-bg: rgb(14, 14, 109);
-  --button-text: #fff;
+  --button-bg: #0b30e1;
+  --button-text: #000;
   --button-font-size: 1.125rem;
   --button-radius: 0.5rem;
   --button-height: 3rem;
   --float-button-text: white;
   --float-button-bg: var(--button-bg);
-  --navbar-bg-start: #0e0e6d;
-  --navbar-bg-end: #5d33be;
-  --navbar-text: var(--welcome-text);
+  
   --overlay-mask-bg: rgba(0, 0, 0, 0.5);
-  --overlay-bg: white;
+  --overlay-bg: #fbfbfb;
   --top-safe-area-height: 1.5rem;
-  --overlay-user-bg: #0e0e6d;
+  --overlay-user-bg: rgba(11, 48, 224,0.8);
   --overlay-user-text: white;
-  --tabs-indicator-bg: rgba(255, 255, 255,0.4);
-  --tabs-selected-bg: rgba(255, 255, 255,0.3);
+
+  // tabs
+  --tabs-indicator-bg: rgba(11, 48, 224,0.8);
+  --tabs-selected-bg: rgba(11, 48, 224,0.6);
   --tabs-selected-text: #0e0e6d;
 
   --button-border-color: #ddd;
   --date-text: #999999;
 
   --number-button-bg: white;
-  --button-bg-important: #5C33BE;
+  --button-bg-important: #0b30e1;
   --button-text-important:white;
 
   --input-min-height: 3em;
@@ -44,7 +53,6 @@
   --emoji-nav-text-selected: #333;
   --amount-text: #53a867;
 
-  --main: #5c33be;
   --tag-bg: #EFEFEF;
 
   --button-bg-danger: #E10505;
@@ -52,7 +60,7 @@
   --list-tag-text: #333;
   --list-amount-text: var(--amount-text);
   --list-time-text: var(--date-text);
-  --main: #5c33be;
+  --main: rgba(11, 48, 224,0.6);
 
   --total-bg: #252A43;
   --total-text: white;

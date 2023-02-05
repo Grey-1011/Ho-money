@@ -58,8 +58,8 @@ export const InputPad = defineComponent({
       { text: '0', onClick: () => { handleClick(0) } },
       { text: '.', onClick: () => { handleClick('.') } },
       { text: '清空', onClick: () => { refAmount.value = '0'} },
-      { text: '+', onClick: () => { handleAdd('+') } },
-      { text: '-', onClick: () => { handleSubtract('-') } },
+      // { text: '+', onClick: () => { handleAdd('+') } },
+      // { text: '-', onClick: () => { handleSubtract('-') } },
       { text: '提交', onClick: () => { 
         context.emit('update:amount', parseFloat(refAmount.value) * 100) 
         props.onSubmit?.()

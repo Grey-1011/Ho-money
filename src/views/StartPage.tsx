@@ -14,7 +14,7 @@ export const StartPage = defineComponent({
   return () => (
     <MainLayout>{
       {
-        title: () => '不叮记账',
+        title: () => 'Ho',
         icon: () => <OverlayIcon />,
         default: () => <>
           <Center class={s.wallet_wrapper}>

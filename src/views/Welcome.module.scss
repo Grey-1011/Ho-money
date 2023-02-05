@@ -12,6 +12,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    svg {
+      width: 6em;
+    }
+    h1 {
+      font-size: 1.95rem;
+    }
  
   }
   > main {
