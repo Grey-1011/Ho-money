@@ -26,7 +26,7 @@ export const routes:Readonly<RouteRecordRaw[]> = [
     beforeEnter: (to, from, next) => {
       localStorage.getItem('skipFeatures') === 'yes' ? next('/start') : next()
     },
-    component: Welcome,
+    component: () => import('../views/Welcome'),
     children: [
       { path: '', redirect: '/welcome/1' },
       { path: '1', name: 'Welcome1', components: { main: First, footer: FirstAction } },
@@ -35,8 +35,8 @@ export const routes:Readonly<RouteRecordRaw[]> = [
       { path: '4', name: 'Welcome4', components: { main: Forth, footer: ForthAction } },
     ]
   },
-  { path: '/start', component: StartPage },
-  { path: '/items', component: ItemPage,
+  { path: '/start', component: () => import('../views/StartPage') },
+  { path: '/items', component: () => import('../views/ItemPage'),
     // beforeEnter: async(to, form, next) => {
     //   await http.get('/me').catch(()=>{
     //     next('/sign_in?return_to=' + to.path )
@@ -45,25 +45,25 @@ export const routes:Readonly<RouteRecordRaw[]> = [
     // },
     children: [
       { path: '', component: ItemList },
-      { path: 'create', component: ItemCreate }
+      { path: 'create', component: ItemCreate },
     ] 
   },
-  { path: '/tags', component: TagPage,
+  { path: '/tags', component: () => import('../views/TagPage'),
     children: [
-      { path: 'create', component: TagCreate },
-      { path: ':id/edit', component: TagEdit }
+      { path: 'create', component: () => import('../components/tag/TagCreate') },
+      { path: ':id/edit', component: () => import('../components/tag/TagEdit') },
     ]
   },
   {
-    path:'/sign_in', component: SignInPage
+    path:'/sign_in', component: () => import('../views/SignInPage')
   },
   {
-    path: '/statistics', component: StatisticsPage
+    path: '/statistics', component: () => import('../views/StatisticsPage')
   },
   {
-    path: '/export', component: ComingSoon
+    path: '/export', component: () => import('../shared/ComingSoon')
   },
   {
-    path: '/remind', component: ComingSoon
+    path: '/remind', component: () => import('../shared/ComingSoon')
   }
 ]
