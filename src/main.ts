@@ -6,6 +6,7 @@ import { history } from './shared/history';
 import "@svgstore";
 import { createPinia } from 'pinia';
 import { useMeStore } from './store/useMeStore';
+import { Empty } from 'vant';
 
 const router = createRouter({
   history,
@@ -35,6 +36,7 @@ const pinia = createPinia()
 const app = createApp(App)
 app.use(pinia)
 app.use(router)
+app.use(Empty)
 app.mount('#app')
 
 const meStore = useMeStore()

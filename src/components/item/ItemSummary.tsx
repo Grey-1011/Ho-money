@@ -1,4 +1,5 @@
 
+import { Empty, showDialog } from 'vant';
 import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useAfterMe } from '../../hooks/useAfterMe';
@@ -71,7 +72,7 @@ export const ItemSummary = defineComponent({
 
     return () => 
     !props.startDate || !props.endDate ? (
-      <div>请先选择时间范围</div>
+      <van-empty image="search" description="请选择时间" />
     ) : (
       <div class={s.wrapper}>
         {itemStore.items && itemStore.items.length > 0 ? (
@@ -120,8 +121,9 @@ export const ItemSummary = defineComponent({
           </>
         ) : (
           <>
-            <Center class={s.pig_wrapper}>
+            <Center class={s.pig_wrapper} direction="|">
               <Icon name="finance_male" class={s.pig} />
+              <p>所选时间暂无数据</p>
             </Center>
           </>
         )}
