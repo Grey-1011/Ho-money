@@ -7,6 +7,9 @@ declare module '*.vue' {
   export default component;
 }
 
+declare var NODE_ENV: boolean;
+
+
 type JSONValue =
   | string
   | number
