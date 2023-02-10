@@ -37,6 +37,11 @@
     padding-top: 1em;
     font-size: 1.25em;
   }
+
+  &.selected {
+    background-color: var(--overlay-user-bg);
+    color: var(--overlay-link-selected-text);
+  }
   > .icon {
     margin-right: 0.75em;
   }
