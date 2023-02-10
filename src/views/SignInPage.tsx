@@ -1,3 +1,4 @@
+import { showNotify } from "vant";
 import { defineComponent, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBool } from "../hooks/useBool";
@@ -55,6 +56,7 @@ export const SignInPage = defineComponent({
         meStore.refreshMe()
 
         router.push(returnTo || '/')
+        showNotify({ type: 'success', message: '登录成功' });
       }
     };
     const onError = (error: any) => {

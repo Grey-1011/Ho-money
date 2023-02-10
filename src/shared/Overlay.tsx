@@ -1,4 +1,4 @@
-import { showDialog } from 'vant';
+import { showDialog, showNotify } from 'vant';
 import { defineComponent, onMounted, PropType, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { useMeStore } from '../store/useMeStore';
@@ -21,6 +21,12 @@ export const Overlay = defineComponent({
       await showDialog({
         title: '确认',
         message: '确定要退出登录吗？',
+      });
+      showNotify({
+        message: '已退出登录',
+        color: '#fff',
+        background: '#ddd',
+        duration: 3000
       });
       localStorage.removeItem('jwt');
       window.location.reload() 
